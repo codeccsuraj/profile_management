@@ -1,0 +1,28 @@
+/**
+ ## form elements css
+ **/
+
+ .form-group{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1px 8px;
+    margin: 8px 10px;
+    gap: 3px;
+ }
+.btn {
+    border: none;
+    outline: none;
+    padding: 7px 16px;
+    width: fit-content;
+    border-radius: 5px;
+}
+
+.bg-primary {
+    background-color: #ffd3ad;
+    color: black;
+}
+.login-page{
+    background-image: url('https://img.freepik.com/free-vector/abstract-technology-green-background_1035-17926.jpg?t=st=1731423747~exp=1731427347~hmac=f514bae33bc0aa86ad8438c72fcc3cfb49ecf185d8633412abf870f0801a4972&w=996');
+    background-size: cover;
+}
