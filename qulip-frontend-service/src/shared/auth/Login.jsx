@@ -13,6 +13,7 @@ const Login = () => {
     password: "",
   });
   const [passwordToggle, setPasswordToggle] = useState(false);
+  const [error, setError] = useState("");  // State to hold error message
 
   useEffect(() => {
     if (token) {
@@ -21,7 +22,6 @@ const Login = () => {
         navigate(redirectTo);
       }, 1000);
 
-      // Cleanup timeout on component unmount or token change
       return () => clearTimeout(timerId);
     }
   }, [token, navigate, location?.state?.from?.pathname]);
@@ -40,6 +40,23 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if fields are empty and show an error message
+    if (!loginCredentials.email || !loginCredentials.password) {
+      setError("Both email and password are required!");
+
+      // Clear the error after 3 seconds
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+
+      return;  // Prevent form submission
+    }
+
+    // Clear any previous error message
+    setError("");
+
+    // Call login handler if fields are valid
     await loginHandler(loginCredentials);
   };
 
@@ -64,6 +81,12 @@ const Login = () => {
                   </Link>
                 </p>
               </div>
+              {/* Display error message if there is an error */}
+              {error && (
+                <div className="alert alert-danger" role="alert">
+                  {error}
+                </div>
+              )}
               <form onSubmit={handleSubmit}>
                 <div className="form-group mb-3">
                   <label htmlFor="email" className="form-label">
@@ -76,7 +99,6 @@ const Login = () => {
                     placeholder="Your username or email"
                     onChange={handleInputChange}
                     value={loginCredentials.email}
-                    required
                   />
                 </div>
                 <div className="form-group relative mb-3">
@@ -90,7 +112,6 @@ const Login = () => {
                     placeholder="Your password"
                     onChange={handleInputChange}
                     value={loginCredentials.password}
-                    required
                   />
                   <Link
                     type="button"
